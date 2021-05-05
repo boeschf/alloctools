@@ -43,7 +43,7 @@ memory_region types and requests are routed through to stacks depending on size.
 Note that the memory_pool is thread safe.
 
 * :cpp:class:`alloctools::rma::memory_pool_stack`
-This is jjust a stack of memory regions. The memory pools uses differnt stacks
+This is just a stack of memory regions. The memory pools uses differnt stacks
 ffor regions of different sizes and pushes and pops them onto stacks.
 The use of a (lockfree) stack makes the pool threadsafe and the cache reuse is
 hopefully improved by using a stack.
@@ -66,5 +66,18 @@ return native handles to RMA keys.
 * :cpp:class:`alloctools::rma::libfabric::region_provider`
 This is a concrete implementation of a provider that can be used with the
 memory_region_traits to create a memory allocator/pool/etc.
+
+* :cpp:class:`alloctools::rma::memory_region_pointer`
+This is a fancy pointer that can be used like a normal pointer as it derefernces
+to the address, but it also contains memory region ino such as RMA keys that are needed
+when performing RMA operation between nodes.
+
+* :cpp:class:`alloctools::rma::memory_region_allocator`
+This is an STL like allocator that returns fancy pointers of memory_region_pointer
+type and can be used as a basic means of accessing pinned memory.
+Most code in HPX/GHEx uses memory pools directly rather than the allocator, but it
+is useful when porting network send/receive code that uses existing memory allocation
+routines.
+
 
 See the :ref:`API reference <alloctools>` of the module for more details.
